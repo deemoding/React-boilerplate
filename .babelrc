@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }],
+    ["lodash"],
+    ["transform-class-properties"],
+    ["transform-runtime"]
+  ],
+
+  "env": {
+    "production": {
+      "presets": [ "es2015", "stage-0", "react" ],
+      "optional": ["optimisation", "minification"]
+    },
+    "development": {
+      "presets": [ "react", "stage-0" ],
+      "plugins": []
+    },
+    "build": {
+      "presets": [ "es2015", "stage-0", "react" ],
+      "optional": ["optimisation", "minification"]
+    }
+  }
+}
