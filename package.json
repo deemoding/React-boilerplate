@@ -1,5 +1,5 @@
 {
-  "name": "react-boilerplate",
+  "name": "React-boilerplate",
   "version": "1.0.0",
   "main": "public/main.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "start": "webpack-dev-server --mode development --devtool eval --progress",
     "build": "webpack --mode production --config webpack.production.config.js",
     "validate": "npm ls",
-    "commit": "git cz",
+    "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
   },
   "dependencies": {
