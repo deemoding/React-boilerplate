@@ -31,23 +31,15 @@ React脚手架
 
 ## 开始项目
 
-1. 直接clone本项目，删去`.git`文件夹
+```bash
+git clone https://github.com/D-e-e-m-o/React-boilerplate
+git chechout clean
+rm -rf .git
+git init
+yarn
+```
 
-1. 修改`package.json`，配置你需要的依赖，修改开源许可证等配置
-
-1. 修改`LICENSE`
-
-1. 去掉默认的`CHANGELOG.md`
-
-1. 初始化项目
-
-  ```bash
-    # 必须按顺序执行
-    git init
-    yarn
-  ```
-
-1. 删掉`src`下多余的文件（建议保留`index.jsx`和`index.css`），开始自己的项目
+记得修改`package.json`内的初始化信息
 
 ## 提交代码
 
