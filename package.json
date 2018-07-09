@@ -5,7 +5,7 @@
   "scripts": {
     "precommit": "npm run lint",
     "commitmsg": "npm run lint:msg",
-    "lint": "eslint --cache --fix --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
+    "lint": "eslint --cache --fix --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
     "lint:msg": "validate-commit-msg",
     "test": "npm run lint",
     "start": "webpack-dev-server --mode development --devtool eval --progress",
