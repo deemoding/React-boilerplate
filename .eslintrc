@@ -14,9 +14,6 @@
        "impliedStrict": true
      }
   },
-  "globals": {
-    "BIMWINNER": true
-  },
   "settings": {
     "polyfills": ["promises"]
   },
