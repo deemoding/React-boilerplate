@@ -36,7 +36,7 @@ git clone https://github.com/D-e-e-m-o/React-boilerplate
 git chechout clean
 rm -rf .git
 git init
-yarn
+npm i
 ```
 
 记得修改`package.json`内的初始化信息

@@ -1,6 +1,6 @@
 {
   "name": "React-boilerplate",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "public/main.js",
   "scripts": {
     "precommit": "npm run lint",
