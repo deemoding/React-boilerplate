@@ -13,6 +13,8 @@ module.exports = {
     contentBase: './public',
     port
   },
+  mode: "development",
+  devtool: "eval-source-map",
   entry: [
     path.resolve(__dirname, 'src/index.jsx')
   ],
@@ -81,6 +83,6 @@ module.exports = {
       hash: false,
       inject: false,
       template: 'public/index.html'
-    })
+    }),
   ]
 };
