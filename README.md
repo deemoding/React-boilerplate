@@ -61,3 +61,7 @@ npm i
 husky已经预先设置了常用的hook。原理：安装husky后，它在`.git`目录下生成一些`hook script`，当满足条件（比如precommit），它会查找`package.json`内是否包含对应的script，如果有就执行。本脚手架的强制eslint和
 commit message检查就是这样实现的。因此，想自定义hook，可以自己在
 `package.json`内添加script就可以了。
+
+# 注意
+
+1. 如果运行build的时候，uglify插件报错了，尝试将`uglifyES`改为`uglifyJS`
