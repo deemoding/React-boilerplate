@@ -31,6 +31,8 @@ React脚手架
 
 ## 开始项目
 
+你可以自行选择yarn还是npm
+
 ```bash
 git clone https://github.com/D-e-e-m-o/React-boilerplate
 git chechout clean
@@ -45,13 +47,13 @@ npm i
 
 ```bash
   git add $yourfile
-  yarn run commit
+  npm run commit
 ```
 
 ## 生成changelog
 
 ```bash
-  yarn run changelog
+  npm run changelog
 ```
 
 ## 使用git hook
