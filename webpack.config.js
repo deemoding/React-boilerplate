@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const port = 65534;
@@ -14,7 +13,7 @@ module.exports = {
     port
   },
   mode: "development",
-  devtool: "eval-source-map",
+  devtool: "eval",
   entry: [
     path.resolve(__dirname, 'src/index.jsx')
   ],
@@ -25,48 +24,58 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        include: [
-          path.resolve(__dirname, 'public'),
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/antd/es')
-        ],
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-      }, {
-        test: /\.(png|jpg|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              fallback: 'file-loader' // 经过测试，如果不指定这个，也会默认用它处理
-            }
-          }
-        ]
-      }, {
-        test: /\.less$/,
-        use: [{
-          loader: 'css-loader'
-        }, {
-          loader: 'less-loader',
-          options: {
-            javascriptEnabled: true,
-            paths: [
-              path.resolve(__dirname)
-            ]
-          }
-        }]
-      }, {
         test: /\.js[x]?$/,
         include: [
           path.resolve(__dirname, 'src'),
         ],
         exclude: /node_modules/,
         loader: 'babel-loader'
+      }, {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 2,
+            },
+          },
+          "less-loader",
+          "postcss-loader",
+        ],
+      }, {
+        test: /\.less$/,
+        include: /node_modules/,
+        exclude: /src/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
+        ]
+      }, {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader",
+        ],
+      }, {
+        test: /\.(png|jpg|jpeg|svg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10240,
+              fallback: 'file-loader' // 经过测试，如果不指定这个，也会默认用它处理
+            }
+          }
+        ]
       }, {
         test: /\.md$/,
         loader: "raw-loader"
@@ -78,7 +87,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new OpenBrowserPlugin({ url: `http://localhost:${port}` }),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
