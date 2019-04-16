@@ -3,20 +3,24 @@ React脚手架
 
 # Feature:
 
-* 支持eslint，预置一些规则
+* 支持 `eslint` ，预置一些规则
 
-* 配置了babel，加入antd和lodash的按需加载及其他配置
+* 配置了 `babel7` 及其他配置
 
-* 预置webpack配置（包括开发和生产环境配置），包括了几个
-常用的loader，uglify，no-console
+* 真正的 `antd` 按需加载
 
-* 支持HotModule
+* 预置 `webpack` 配置（包括开发和生产环境配置），包括了几个
+常用的loader，terser
+
+* 支持 `HotModule`
 
 * 使用2空格缩进
 
 * git commit 使用 [AngularJS commit conventions](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits)
 
-* 使用githook保证提交都必须通过eslint和commit检查
+* 使用 `husky` 保证提交都必须通过 `eslint` 和 `commit` 检查
+
+* 支持 `less` + `css module`
 
 * 支持一键生成Changelog
 
@@ -25,23 +29,21 @@ React脚手架
 ## 预览本示例项目
 
 ```bash
-  yarn
-  yarn start
+  npm i
+  npm start
 ```
 
 ## 开始项目
 
-你可以自行选择yarn还是npm
-
 ```bash
-git clone https://github.com/D-e-e-m-o/React-boilerplate
+git clone https://github.com/deemoding/React-boilerplate
 git chechout clean
 rm -rf .git
 git init
 npm i
 ```
 
-记得修改`package.json`内的初始化信息
+记得修改 `package.json` 内的初始化信息
 
 ## 提交代码
 
@@ -64,4 +66,4 @@ commit message检查就是这样实现的。因此，想自定义hook，可以�
 
 # 注意
 
-1. 如果运行build的时候，uglify插件报错了，尝试将`uglifyES`改为`uglifyJS`
+1. 如果你使用antd的话，必须保留 `src/antd/icon.js` 。如果你需要使用图标库，请参照样例添加需要的图标
