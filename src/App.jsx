@@ -9,7 +9,7 @@ import "./githubCss.css";
 class App extends React.PureComponent {
   componentDidMount() {
     setTimeout(() => {
-      message.success("This boilerplate is so cool!", 3);
+      message.success("This boilerplate is so cool!", 300);
     }, 500);
   }
 

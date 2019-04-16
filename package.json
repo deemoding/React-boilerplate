@@ -1,7 +1,11 @@
 {
   "name": "react-boilerplate",
-  "version": "1.1.2",
-  "main": "public/main.js",
+  "version": "1.2.0",
+  "main": "src/index.jsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deemoding/React-boilerplate"
+  },
   "scripts": {
     "precommit": "npm run lint",
     "commitmsg": "npm run lint:msg",
@@ -21,7 +25,8 @@
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "showdown": "^1.9.0"
+    "showdown": "^1.9.0",
+    "@ant-design/icons": "^1.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -29,6 +34,7 @@
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "acorn": "^6.1.1",
     "autoprefixer": "^9.4.5",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
@@ -52,20 +58,18 @@
     "husky": "^1.3.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "lodash-webpack-plugin": "^0.11.5",
     "no-console-webpack-plugin": "0.0.5",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.5.0",
     "raw-loader": "^1.0.0",
     "style-loader": "^0.23.1",
-    "uglifyjs-webpack-plugin": "^2.1.1",
+    "terser-webpack-plugin": "^1.2.3",
     "url-loader": "^1.1.2",
     "validate-commit-msg": "^2.14.0",
     "webpack": "^4.28.4",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-parallel-uglify-plugin": "^1.1.0"
+    "webpack-dev-server": "^3.1.14"
   },
   "keywords": [
     "es6",

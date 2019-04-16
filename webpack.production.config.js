@@ -2,9 +2,9 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: {
@@ -17,47 +17,54 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'node_modules/antd/es')
+        test: /\.js[x]?$/,
+        loader: 'babel-loader'
+      }, {
+        test: /\.less$/,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 2,
+            },
+          },
+          "less-loader",
+          "postcss-loader",
         ],
+      }, {
+        test: /\.less$/,
+        include: /node_modules/,
+        exclude: /src/,
         use: [
           'style-loader',
           'css-loader',
-          'sass-loader'
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
         ]
       }, {
-        test: /\.less$/,
-        use: [{
-          loader: 'css-loader'
-        }, {
-          loader: 'less-loader',
-          options: {
-            javascriptEnabled: true,
-            paths: [
-              path.resolve(__dirname)
-            ]
-          }
-        }]
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          "css-loader",
+        ],
       }, {
-        test: /\.(png|jpg|svg)$/,
+        test: /\.(png|jpg|jpeg|svg|gif)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 8192,
+              limit: 10240,
               fallback: 'file-loader'
             }
           }
         ]
-      }, {
-        test: /\.js[x]?$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-        ],
-        exclude: /node_modules/,
-        loader: 'babel-loader'
       }, {
         test: /\.md$/,
         loader: "raw-loader"
@@ -65,12 +72,34 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    },
   },
   optimization: {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: "all",
+    },
+    minimizer: [
+      new TerserPlugin({
+        test: /\.js[x]?$/,
+        cache: false,
+        parallel: true,
+        terserOptions: {
+          output: {
+            beautify: false, // 不需要格式化
+            comments: false, // 不保留注释
+          },
+          compress: {
+            booleans: false,
+            drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+            collapse_vars: true, // 内嵌定义了但是只用到一次的变量
+            reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
+          },
+        },
+      }),
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -79,20 +108,6 @@ module.exports = {
       }
     }),
     new CleanWebpackPlugin(path.resolve(__dirname, 'build')),
-    new LodashModuleReplacementPlugin(),
-    new ParallelUglifyPlugin({
-      uglifyES: {
-        output: {
-          beautify: false, // 不需要格式化
-          comments: true, // 不保留注释
-        },
-        compress: {
-          drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
-          collapse_vars: true, // 内嵌定义了但是只用到一次的变量
-          reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
-        }
-      }
-    }),
     new CopyWebpackPlugin([
       { from: './public/*.json', to: '[name].[ext]' },
       { from: './public/favicon.ico', to: 'favicon.ico' },
@@ -101,6 +116,7 @@ module.exports = {
       hash: false,
       inject: false,
       template: 'public/index.html'
-    })
+    }),
+    new BundleAnalyzerPlugin(),
   ]
 };

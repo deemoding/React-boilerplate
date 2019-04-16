@@ -25,10 +25,6 @@ module.exports = {
     rules: [
       {
         test: /\.js[x]?$/,
-        include: [
-          path.resolve(__dirname, 'src'),
-        ],
-        exclude: /node_modules/,
         loader: 'babel-loader'
       }, {
         test: /\.less$/,
@@ -83,7 +79,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
+    alias: {
+      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
