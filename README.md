@@ -37,7 +37,6 @@ React脚手架
 
 ```bash
 git clone https://github.com/deemoding/React-boilerplate
-git chechout clean
 rm -rf .git
 git init
 npm i
@@ -45,11 +44,13 @@ npm i
 
 记得修改 `package.json` 内的初始化信息
 
+如果你不需要markdown预览组件，请自己 `npm remove showdown`
+
 ## 提交代码
 
 ```bash
   git add $yourfile
-  npm run commit
+  npm run cz
 ```
 
 ## 生成changelog
@@ -58,7 +59,7 @@ npm i
   npm run changelog
 ```
 
-## 使用git hook
+## 使用husky
 
 husky已经预先设置了常用的hook。原理：安装husky后，它在`.git`目录下生成一些`hook script`，当满足条件（比如precommit），它会查找`package.json`内是否包含对应的script，如果有就执行。本脚手架的强制eslint和
 commit message检查就是这样实现的。因此，想自定义hook，可以自己在

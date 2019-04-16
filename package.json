@@ -15,7 +15,7 @@
     "start": "webpack-dev-server --progress",
     "build": "webpack --mode production --config webpack.production.config.js",
     "validate": "npm ls",
-    "commit": "git-cz",
+    "cz": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
   },
   "dependencies": {
