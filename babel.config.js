@@ -19,7 +19,7 @@ module.exports = api => {
     ["import", {
       "libraryName": "antd",
       "libraryDirectory": "es",
-      "style": (paths) => `${paths.replace(/(.*)(row|col)/, "$1grid")}/style/index`
+      "style": (paths) => `${paths.replace(/(.*)(row|col)$/, "$1grid")}/style/index`
     }]
   ];
 
