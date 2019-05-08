@@ -37,6 +37,7 @@ React脚手架
 
 ```bash
 git clone https://github.com/deemoding/React-boilerplate
+cd React-boilerplate
 rm -rf .git
 git init
 npm i

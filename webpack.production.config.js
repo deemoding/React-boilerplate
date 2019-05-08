@@ -107,7 +107,9 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new CleanWebpackPlugin(path.resolve(__dirname, 'build')),
+    new CleanWebpackPlugin({
+      verbose: true,
+    }),
     new CopyWebpackPlugin([
       { from: './public/*.json', to: '[name].[ext]' },
       { from: './public/favicon.ico', to: 'favicon.ico' },

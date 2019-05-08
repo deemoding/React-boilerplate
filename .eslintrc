@@ -33,6 +33,8 @@
     "import/prefer-default-export": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/label-has-associated-control": "off", // 似乎有bug
+    "jsx-a11y/label-has-for": "off",
     "jsx-a11y/media-has-caption": "off", // h5 video,audio需要track字幕
     "jsx-a11y/no-noninteractive-element-interactions": "off",
     "new-cap": 0,
@@ -55,11 +57,12 @@
     "promise/param-names": 2,
     "quote-props": "off",
     "quotes": "off",
+    "react/destructuring-assignment": "off",
     "react/forbid-prop-types": ["error", { "forbid": [] }],
     "react/jsx-filename-extension": 0,
     "react/no-danger": "error",
     "react/no-did-mount-set-state": "warn",
-    "react/prefer-stateless-function": "off",
+    "react/prefer-stateless-function": "off", // TODO:bug修好了，似乎快要发布了
     "react/sort-comp": "off",
     "strict": "error"
   },
