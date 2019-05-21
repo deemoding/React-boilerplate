@@ -12,7 +12,7 @@ React脚手架
 * 预置 `webpack` 配置（包括开发和生产环境配置），包括了几个
 常用的loader，terser
 
-* 支持 `HotModule`
+* 支持 `HMR`
 
 * 使用2空格缩进
 

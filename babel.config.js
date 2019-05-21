@@ -3,19 +3,22 @@ module.exports = api => {
 
   const presets = [
     ["@babel/preset-env", {
-      "targets": {
-        "chrome": 60,
-        "firefox": 60
+      targets: {
+        chrome: 60,
+        firefox: 60,
+        ie: 10
       },
-      "spec": true,
-      "debug": false
+      spec: true,
+      debug: false,
+      useBuiltIns: 'usage',
+      corejs: 3,
+      modules: 'cjs'
     }],
     "@babel/preset-react"
   ];
 
   const plugins = [
     ["@babel/plugin-proposal-class-properties"],
-    ["@babel/plugin-transform-runtime"],
     ["import", {
       "libraryName": "antd",
       "libraryDirectory": "es",

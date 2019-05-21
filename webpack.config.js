@@ -25,6 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.js[x]?$/,
+        exclude: /\bcore-js\b/,
         loader: 'babel-loader'
       }, {
         test: /\.less$/,
@@ -36,10 +37,11 @@ module.exports = {
             options: {
               modules: true,
               importLoaders: 2,
+              localIdentName: '[local]-[contenthash:base64:8]',
             },
           },
-          "less-loader",
           "postcss-loader",
+          "less-loader",
         ],
       }, {
         test: /\.less$/,
