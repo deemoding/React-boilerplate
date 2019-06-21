@@ -62,7 +62,9 @@
     "react/jsx-filename-extension": 0,
     "react/no-danger": "error",
     "react/no-did-mount-set-state": "warn",
-    "react/prefer-stateless-function": "off", // TODO:bug修好了，似乎快要发布了
+    "react/prefer-stateless-function": ["error", {
+      "ignorePureComponents": true
+    }],
     "react/sort-comp": "off",
     "strict": "error"
   },
