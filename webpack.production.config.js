@@ -4,15 +4,18 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
+  mode: "production",
   entry: {
     app: path.resolve(__dirname, 'src/index.jsx'),
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].bundle.[chunkhash:8].js'
+    filename: '[name].[chunkhash:8].min.js'
   },
   module: {
     rules: [
@@ -23,17 +26,25 @@ module.exports = {
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
+        // FIXME:样式表不生成sourcemap
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
               modules: true,
               importLoaders: 2,
+              camelCase: true,
+              sourceMap: true,
             },
           },
           "postcss-loader",
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+            }
+          }
         ],
       }, {
         test: /\.less$/,
@@ -52,8 +63,13 @@ module.exports = {
       }, {
         test: /\.css$/,
         use: [
-          "style-loader",
-          "css-loader",
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
         ],
       }, {
         test: /\.(png|jpg|jpeg|svg|gif)$/,
@@ -100,6 +116,9 @@ module.exports = {
           },
         },
       }),
+      new OptimizeCSSAssetsPlugin({
+        assetNameRegExp: /\.(css|less)$/,
+      }),
     ],
   },
   plugins: [
@@ -110,6 +129,11 @@ module.exports = {
     }),
     new CleanWebpackPlugin({
       verbose: true,
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].[chunkhash:8].min.css',
     }),
     new CopyWebpackPlugin([
       { from: './public/*.json', to: '[name].[ext]' },

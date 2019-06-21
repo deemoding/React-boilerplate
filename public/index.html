@@ -2,8 +2,11 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
+    <meta name="renderer" content="webkit" />
     <title>React脚手架</title>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link rel="stylesheet" type="text/css" href="<%= htmlWebpackPlugin.files.css[css] %>"><% } %>
   </head>
   <body>
     <div id="root"></div>

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const opener = require('opener');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const port = 65534;
@@ -38,6 +39,7 @@ module.exports = {
               modules: true,
               importLoaders: 2,
               localIdentName: '[local]-[contenthash:base64:8]',
+              camelCase: true,
             },
           },
           "postcss-loader",
@@ -93,5 +95,22 @@ module.exports = {
       inject: false,
       template: 'public/index.html'
     }),
+    (() => {
+      class Opener {
+        constructor() {
+          this.done = false;
+        }
+
+        apply(compiler) {
+          compiler.hooks.done.tap('Opener', stats => {
+            if (!(this.done || stats.hasErrors())) {
+              opener(`http://localhost:${port}`);
+              this.done = true;
+            }
+          });
+        }
+      }
+      return new Opener();
+    })(),
   ]
 };
