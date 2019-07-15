@@ -10,8 +10,6 @@ module.exports = api => {
       },
       spec: true,
       debug: false,
-      useBuiltIns: 'usage',
-      corejs: 3,
       modules: 'cjs'
     }],
     "@babel/preset-react"

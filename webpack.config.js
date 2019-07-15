@@ -36,10 +36,11 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[local]-[contenthash:base64:8]',
+              },
               importLoaders: 2,
-              localIdentName: '[local]-[contenthash:base64:8]',
-              camelCase: true,
+              localsConvention: 'camelCase',
             },
           },
           "postcss-loader",
