@@ -16,8 +16,7 @@
     "cz": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1",
     "validate": "npm ls",
-    "precommit": "npm run lint",
-    "commitmsg": "npm run lint:msg"
+    "checkmsg": "npm run lint:msg"
   },
   "dependencies": {
     "@ant-design/icons": "^2.1.1",
