@@ -81,3 +81,5 @@ TypeError: Cannot read property 'range' of null
 则进行[如下尝试](https://github.com/babel/babel-eslint/issues/530#issuecomment-447511293)
 
 3. `showdown`依赖低版本的`mem`，不需要md预览功能的，移除`showdown`即可解决安全警告
+
+4. `momentjs`太大了？罪魁祸首是[这个](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/index.tsx#L3)
