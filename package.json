@@ -1,6 +1,6 @@
 {
   "name": "react-boilerplate",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "main": "src/index.jsx",
   "repository": {
     "type": "git",
@@ -19,8 +19,6 @@
   "dependencies": {
     "@ant-design/icons": "^2.1.1",
     "antd": "^3.23.2",
-    "core-js": "^3.2.1",
-    "immutable": "^3.8.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "showdown": "^1.9.0"
