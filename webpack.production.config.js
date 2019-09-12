@@ -100,11 +100,16 @@ module.exports = {
     splitChunks: {
       chunks: "all",
     },
+    minimize: true,
     minimizer: [
       new TerserPlugin({
         test: /\.js[x]?$/,
         cache: false,
         parallel: true,
+        // Works only with
+        // source-map, inline-source-map, hidden-source-map and nosources-source-map values
+        // for the devtool option
+        sourceMap: false,
         terserOptions: {
           output: {
             beautify: false, // 不需要格式化

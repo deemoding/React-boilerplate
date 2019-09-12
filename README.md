@@ -71,3 +71,10 @@ commit message检查就是这样实现的。因此，想自定义hook，可以�
 # 注意
 
 1. 如果你使用antd的话，必须保留 `src/antd/icon.js` 。如果你需要使用图标库，请参照样例添加需要的图标
+2. 升级到`1.7.0`后，要先移除`.eslintcache`，然后重新`npm run lint:fix`。如果报告如下错误
+
+```bash
+TypeError: Cannot read property 'range' of null
+```
+
+则进行[如下尝试](https://github.com/babel/babel-eslint/issues/530#issuecomment-447511293)
