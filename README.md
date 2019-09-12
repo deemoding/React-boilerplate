@@ -64,9 +64,9 @@ npm i
 
 ## 使用husky
 
-husky已经预先设置了常用的hook。原理：安装husky后，它在`.git`目录下生成一些`hook script`，当满足条件（比如precommit），它会查找`package.json`内是否包含对应的script，如果有就执行。本脚手架的强制eslint和
+husky已经预先设置了常用的hook。原理：安装husky后，它在`.git`目录下生成一些`hook script`，当满足条件（比如pre-commit），它会查找`.huskyrc`内是否包含对应的配置，如果有就执行。本脚手架的强制eslint和
 commit message检查就是这样实现的。因此，想自定义hook，可以自己在
-`package.json`内添加script就可以了。
+`.huskyrc`内添加就可以了。
 
 # 注意
 
