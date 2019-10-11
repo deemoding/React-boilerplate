@@ -26,6 +26,8 @@ React脚手架
 
 * 支持自动打开浏览器窗口
 
+* 启用React.StrictMode
+
 # 使用方法
 
 ## 预览本示例项目
@@ -83,3 +85,5 @@ TypeError: Cannot read property 'range' of null
 3. `showdown`依赖低版本的`mem`，不需要md预览功能的，移除`showdown`即可解决安全警告
 
 4. `momentjs`太大了？罪魁祸首是[这个](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/index.tsx#L3)
+
+5. 启用了`React.StrictMode`，要格外注意[这里](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
