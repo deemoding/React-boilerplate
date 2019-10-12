@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -99,6 +99,9 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: "all",
+      maxInitialRequests: 30,
+      maxAsyncRequests: 30,
+      maxSize: 100_100,
     },
     minimize: true,
     minimizer: [
@@ -146,11 +149,11 @@ module.exports = {
       { from: './public/*.json', to: '[name].[ext]' },
       { from: './public/favicon.ico', to: 'favicon.ico' },
     ]),
-    new HtmlWebpackPlugin({
-      hash: false,
-      inject: false,
-      template: 'public/index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   hash: false,
+    //   inject: false,
+    //   template: 'public/index.html'
+    // }),
     new BundleAnalyzerPlugin(),
   ]
 };
