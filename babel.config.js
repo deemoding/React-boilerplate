@@ -3,11 +3,6 @@ module.exports = api => {
 
   const presets = [
     ["@babel/preset-env", {
-      targets: {
-        chrome: 60,
-        firefox: 60,
-        ie: 10
-      },
       spec: true,
       debug: false,
       modules: 'cjs'
