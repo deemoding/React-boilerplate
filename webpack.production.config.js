@@ -7,8 +7,16 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HappyPack = require('happypack');
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
-module.exports = {
+const smp = new SpeedMeasurePlugin({
+  disable: false,
+  outputTarget: './build/speedReport.txt',
+  // outputFormat: 'json',
+});
+
+module.exports = smp.wrap({
   mode: "production",
   entry: {
     app: path.resolve(__dirname, 'src/index.jsx'),
@@ -25,46 +33,24 @@ module.exports = {
           /node_modules\/core-js/,
           /node_modules\/@babel\/runtime/,
         ],
-        loader: 'babel-loader'
+        use: [
+          'happypack/loader?id=js',
+        ],
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
         // FIXME:样式表不生成sourcemap
         use: [
           MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: '[local]-[contenthash:base64:8]',
-                context: path.resolve(__dirname),
-              },
-              importLoaders: 2,
-              localsConvention: 'camelCase',
-              sourceMap: true,
-            },
-          },
-          "postcss-loader",
-          {
-            loader: "less-loader",
-            options: {
-              sourceMap: true,
-            }
-          }
+          'happypack/loader?id=less',
         ],
       }, {
         test: /\.less$/,
         include: /node_modules/,
         exclude: /src/,
         use: [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-            },
-          },
+          MiniCssExtractPlugin.loader,
+          'happypack/loader?id=antd',
         ]
       }, {
         test: /\.css$/,
@@ -138,6 +124,51 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new HappyPack({
+      id: 'js',
+      threads: 7,
+      loaders: [
+        'babel-loader',
+      ]
+    }),
+    new HappyPack({
+      id: 'less',
+      threads: 7,
+      loaders: [
+        {
+          loader: "css-loader",
+          options: {
+            modules: {
+              localIdentName: '[local]-[contenthash:base64:8]',
+              context: path.resolve(__dirname),
+            },
+            importLoaders: 2,
+            localsConvention: 'camelCase',
+            sourceMap: true,
+          },
+        },
+        "postcss-loader",
+        {
+          loader: "less-loader",
+          options: {
+            sourceMap: true,
+          }
+        }
+      ]
+    }),
+    new HappyPack({
+      id: 'antd',
+      threads: 7,
+      loaders: [
+        'css-loader',
+        {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+          },
+        },
+      ]
+    }),
     new CleanWebpackPlugin({
       verbose: true,
     }),
@@ -157,4 +188,4 @@ module.exports = {
     }),
     new BundleAnalyzerPlugin(),
   ]
-};
+});

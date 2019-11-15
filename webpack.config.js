@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const opener = require('opener');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HappyPack = require('happypack');
 
 const port = 65534;
 
@@ -30,39 +31,24 @@ module.exports = {
           /node_modules\/core-js/,
           /node_modules\/@babel\/runtime/,
         ],
-        loader: 'babel-loader'
+        use: [
+          'happypack/loader?id=js',
+        ],
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
         use: [
           "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: '[local]-[contenthash:base64:8]',
-                context: path.resolve(__dirname),
-              },
-              importLoaders: 2,
-              localsConvention: 'camelCase',
-            },
-          },
-          "postcss-loader",
-          "less-loader",
+          'happypack/loader?id=less',
         ],
       }, {
+        // antd
         test: /\.less$/,
         include: /node_modules/,
         exclude: /src/,
         use: [
           'style-loader',
-          'css-loader',
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-            },
-          },
+          'happypack/loader?id=antd',
         ]
       }, {
         test: /\.css$/,
@@ -95,6 +81,45 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new HappyPack({
+      id: 'js',
+      threads: 7,
+      loaders: [
+        'babel-loader',
+      ],
+    }),
+    new HappyPack({
+      id: 'less',
+      threads: 7,
+      loaders: [
+        {
+          loader: "css-loader",
+          options: {
+            modules: {
+              localIdentName: '[local]-[contenthash:base64:8]',
+              context: path.resolve(__dirname),
+            },
+            importLoaders: 2,
+            localsConvention: 'camelCase',
+          },
+        },
+        "postcss-loader",
+        "less-loader",
+      ]
+    }),
+    new HappyPack({
+      id: 'antd',
+      threads: 7,
+      loaders: [
+        'css-loader',
+        {
+          loader: 'less-loader',
+          options: {
+            javascriptEnabled: true,
+          },
+        },
+      ]
+    }),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
