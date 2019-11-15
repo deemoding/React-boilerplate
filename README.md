@@ -26,7 +26,11 @@ React脚手架
 
 * 支持自动打开浏览器窗口
 
+* 使用happypack加速
+
 * 启用React.StrictMode
+
+* 支持build相关报告，包括build产物分析图表，build耗时报告
 
 # 使用方法
 
@@ -69,6 +73,10 @@ npm i
 husky已经预先设置了常用的hook。原理：安装husky后，它在`.git`目录下生成一些`hook script`，当满足条件（比如pre-commit），它会查找`.huskyrc`内是否包含对应的配置，如果有就执行。本脚手架的强制eslint和
 commit message检查就是这样实现的。因此，想自定义hook，可以自己在
 `.huskyrc`内添加就可以了。
+
+## 分析build结果
+
+运行build之后，会自动打开一个分析页面，显示了最终产物的大小。build文件夹内还包含`speedReport.txt`（配置`webpack.production.config.js`可以改成其他格式），用来记录build耗时
 
 # 注意
 
