@@ -21,7 +21,10 @@ module.exports = {
     rules: [
       {
         test: /\.js[x]?$/,
-        exclude: /\bcore-js\b/,
+        exclude: [
+          /node_modules\/core-js/,
+          /node_modules\/@babel\/runtime/,
+        ],
         loader: 'babel-loader'
       }, {
         test: /\.less$/,
@@ -34,6 +37,7 @@ module.exports = {
             options: {
               modules: {
                 localIdentName: '[local]-[contenthash:base64:8]',
+                context: path.resolve(__dirname),
               },
               importLoaders: 2,
               localsConvention: 'camelCase',
