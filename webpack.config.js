@@ -28,8 +28,9 @@ module.exports = {
       {
         test: /\.js[x]?$/,
         exclude: [
-          /node_modules\/core-js/,
-          /node_modules\/@babel\/runtime/,
+          /.+core-js-pure.*/,
+          /.+@babel\/runtime.*/,
+          /.+@babel\/runtime-corejs3.*/,
         ],
         use: [
           'happypack/loader?id=js',

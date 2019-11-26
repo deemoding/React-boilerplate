@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^2.1.1",
-    "@babel/runtime": "^7.7.2",
+    "@babel/runtime-corejs3": "^7.7.4",
     "antd": "^3.25.1",
-    "core-js": "^3.4.1",
+    "core-js-pure": "^3.4.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "showdown": "^1.9.1"
