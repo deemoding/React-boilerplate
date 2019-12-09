@@ -28,8 +28,8 @@ module.exports = {
       {
         test: /\.js[x]?$/,
         exclude: [
-          /node_modules\/core-js/,
-          /node_modules\/@babel\/runtime/,
+          path.resolve(__dirname, 'node_modules/core-js'),
+          path.resolve(__dirname, 'node_modules/@babel/runtime'),
         ],
         use: [
           'happypack/loader?id=js',
