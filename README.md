@@ -96,4 +96,4 @@ TypeError: Cannot read property 'range' of null
 
 5. 启用了`React.StrictMode`，要格外注意[这里](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
 
-6. 暂时不要用`css-loader@3.2.1`
+6. 暂时不要用`css-loader@>3.2.0`

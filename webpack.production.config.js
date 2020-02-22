@@ -126,14 +126,12 @@ module.exports = smp.wrap({
     }),
     new HappyPack({
       id: 'js',
-      threads: 7,
       loaders: [
         'babel-loader',
       ]
     }),
     new HappyPack({
       id: 'less',
-      threads: 7,
       loaders: [
         {
           loader: "css-loader",
@@ -158,7 +156,6 @@ module.exports = smp.wrap({
     }),
     new HappyPack({
       id: 'antd',
-      threads: 7,
       loaders: [
         'css-loader',
         {

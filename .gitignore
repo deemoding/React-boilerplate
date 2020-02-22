@@ -49,6 +49,7 @@ lib
 
 # Editor
 .idea
+.vscode
 
 # custom
 *.bak
