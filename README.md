@@ -34,18 +34,11 @@ React脚手架
 
 # 使用方法
 
-## 预览本示例项目
-
-```bash
-  npm i
-  npm start
-```
-
 ## 开始项目
 
+先点击[这里](https://github.com/deemoding/React-boilerplate/generate)创建自己的项目，clone你的代码，进入目录之后
+
 ```bash
-git clone https://github.com/deemoding/React-boilerplate
-cd React-boilerplate
 rm -rf .git
 git init
 npm i
@@ -54,6 +47,13 @@ npm i
 记得修改 `package.json` 内的初始化信息
 
 如果你不需要markdown预览组件，请自己 `npm remove showdown`
+
+## 预览本示例项目
+
+```bash
+  npm i
+  npm start
+```
 
 ## 提交代码
 
