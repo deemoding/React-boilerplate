@@ -15,7 +15,14 @@
      }
   },
   "settings": {
-    "polyfills": ["promises"]
+    "polyfills": [
+      "promises"
+    ],
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+      }
+    }
   },
   "rules": {
     "arrow-parens": 0,
@@ -66,12 +73,16 @@
       "ignorePureComponents": true
     }],
     "react/sort-comp": "off",
+    "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
+    "react-hooks/exhaustive-deps": "warn", // 检查 effect 的依赖
     "strict": "error"
   },
   "plugins": [
     "compat",
     "import",
     "promise",
-    "react"
+    "react",
+    "react-hooks",
+    "jsx-a11y"
   ]
 }

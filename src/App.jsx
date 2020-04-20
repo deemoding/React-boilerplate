@@ -30,10 +30,10 @@ class App extends React.PureComponent {
     const htmlContent = converter.makeHtml(readme);
     /* eslint-disable react/no-danger */
     return (
-      <Row className={style.App}>
-        <header className={style["App-header"]}>
-          <img src={logo} className={style["App-logo"]} alt="logo" />
-          <h1 className={style["App-title"]}>React脚手架使用样例</h1>
+      <Row className={style.app}>
+        <header className={style.appHeader}>
+          <img src={logo} className={style.appLogo} alt="logo" />
+          <h1 className={style.appTitle}>React脚手架使用样例</h1>
         </header>
         <div
           className="markdown-body"
