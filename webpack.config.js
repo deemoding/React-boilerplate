@@ -36,10 +36,11 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[local]-[contenthash:8]',
+              },
               importLoaders: 2,
               localsConvention: 'camelCase',
-              // localIdentName: '[local]-[contenthash:base64:8]',
               esModule: true,
               // context: path.resolve(__dirname, "../"),
             },
@@ -86,9 +87,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
-    },
+    // alias: {
+    //   "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    // },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

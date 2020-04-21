@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -15,7 +15,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].[chunkhash:8].min.js'
+    filename: '[name].[contenthash:8].min.js'
   },
   module: {
     rules: [
@@ -32,9 +32,7 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: {
-                localIdentName: '[local]-[contenthash:base64:8]',
-              },
+              modules: true,
               importLoaders: 2,
               localsConvention: 'camelCase',
               sourceMap: true,
@@ -92,16 +90,16 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
-    },
+    // alias: {
+    //   "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    // },
   },
   optimization: {
     splitChunks: {
       chunks: "all",
       maxInitialRequests: 30,
       maxAsyncRequests: 30,
-      maxSize: 100_100,
+      maxSize: 100_000,
     },
     minimize: true,
     minimizer: [
@@ -143,17 +141,17 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[chunkhash:8].min.css',
+      filename: '[name].[contenthash:8].min.css',
     }),
     new CopyWebpackPlugin([
       { from: './public/*.json', to: '[name].[ext]' },
       { from: './public/favicon.ico', to: 'favicon.ico' },
     ]),
-    // new HtmlWebpackPlugin({
-    //   hash: false,
-    //   inject: false,
-    //   template: 'public/index.html'
-    // }),
+    new HtmlWebpackPlugin({
+      hash: false,
+      inject: false,
+      template: 'public/index.html'
+    }),
     new BundleAnalyzerPlugin(),
   ]
 };
