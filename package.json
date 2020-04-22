@@ -7,7 +7,7 @@
     "url": "https://github.com/deemoding/React-boilerplate"
   },
   "scripts": {
-    "start": "webpack-dev-server --progress",
+    "start": "webpack-dev-server --color --progress",
     "build": "webpack --config webpack.production.config.js",
     "test": "npm run lint",
     "lint": "eslint --cache --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",

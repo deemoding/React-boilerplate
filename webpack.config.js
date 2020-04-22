@@ -1,17 +1,23 @@
-const webpack = require('webpack');
 const path = require('path');
 const opener = require('opener');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const port = 65534;
+const HTTPS = true;
 
 module.exports = {
   devServer: {
+    // host: '0.0.0.0',
+    port,
+    contentBase: './public',
+    https: HTTPS,
+    http2: HTTPS,
+    clientLogLevel: 'trace',
     historyApiFallback: true,
     hot: true,
     inline: true,
-    contentBase: './public',
-    port
+    // open: true,
+    // openPage: '',
   },
   mode: "development",
   devtool: "eval",
@@ -92,12 +98,12 @@ module.exports = {
     // },
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
       template: 'public/index.html'
     }),
+    // custom browser opener, only open browser when build successful
     (() => {
       class Opener {
         constructor() {
@@ -107,7 +113,7 @@ module.exports = {
         apply(compiler) {
           compiler.hooks.done.tap('Opener', stats => {
             if (!(this.done || stats.hasErrors())) {
-              opener(`http://localhost:${port}`);
+              opener(`${HTTPS ? 'https' : 'http'}://localhost:${port}`);
               this.done = true;
             }
           });
