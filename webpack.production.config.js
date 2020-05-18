@@ -17,6 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].[contenthash:8].min.js'
   },
+  cache: false,
   module: {
     rules: [
       {
@@ -56,7 +57,9 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
-              javascriptEnabled: true,
+              lessOptions: {
+                javascriptEnabled: true,
+              }
             },
           },
         ]
@@ -105,7 +108,8 @@ module.exports = {
     minimizer: [
       new TerserPlugin({
         test: /\.js[x]?$/,
-        cache: false,
+        // ignored in webpack5
+        // cache: false,
         parallel: true,
         // Works only with
         // source-map, inline-source-map, hidden-source-map and nosources-source-map values
@@ -143,10 +147,12 @@ module.exports = {
       // both options are optional
       filename: '[name].[contenthash:8].min.css',
     }),
-    new CopyWebpackPlugin([
-      { from: './public/*.json', to: '[name].[ext]' },
-      { from: './public/favicon.ico', to: 'favicon.ico' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './public/*.json', to: '[name].[ext]' },
+        { from: './public/favicon.ico', to: 'favicon.ico' },
+      ]
+    }),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
