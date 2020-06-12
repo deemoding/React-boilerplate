@@ -1,5 +1,6 @@
 const path = require('path');
 const opener = require('opener');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const port = 65534;
@@ -100,6 +101,7 @@ module.exports = {
     // },
   },
   plugins: [
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,

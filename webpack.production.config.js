@@ -139,6 +139,10 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
+    }),
     new CleanWebpackPlugin({
       verbose: true,
     }),
