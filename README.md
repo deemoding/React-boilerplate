@@ -87,5 +87,3 @@ TypeError: Cannot read property 'range' of null
 4. ~~`momentjs`太大了？罪魁祸首是[这个](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/index.tsx#L3)~~ antd@4 优化了这部分，现在应该没有这个问题了
 
 5. 启用了`React.StrictMode`，要格外注意[这里](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
-
-6. eslint依赖关系里面不少都依赖了 `^6.8.0` ，因此暂不升级它

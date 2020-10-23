@@ -17,12 +17,18 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].[contenthash:8].min.js'
   },
-  cache: false,
+  cache: {
+    type: 'memory',
+  },
+  devtool: false,
   module: {
     rules: [
       {
         test: /\.js[x]?$/,
-        exclude: /\bcore-js\b/,
+        exclude: [
+          /core-js/,
+          /@babel\/runtime/,
+        ],
         loader: 'babel-loader'
       }, {
         test: /\.less$/,
@@ -33,9 +39,11 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[contenthash:8]',
+                exportLocalsConvention: 'camelCaseOnly',
+              },
               importLoaders: 2,
-              localsConvention: 'camelCase',
               sourceMap: true,
             },
           },
@@ -114,7 +122,7 @@ module.exports = {
         // Works only with
         // source-map, inline-source-map, hidden-source-map and nosources-source-map values
         // for the devtool option
-        sourceMap: false,
+        // sourceMap: false,
         terserOptions: {
           output: {
             beautify: false, // 不需要格式化
@@ -122,7 +130,8 @@ module.exports = {
           },
           compress: {
             booleans: false,
-            drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+            // drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+            pure_funcs: ["console.log", "console.info", "console.debug", "console.trace"],
             collapse_vars: true, // 内嵌定义了但是只用到一次的变量
             reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
           },

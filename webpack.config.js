@@ -3,7 +3,7 @@ const opener = require('opener');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const port = 65534;
+const port = 65533;
 const HTTPS = true;
 
 module.exports = {
@@ -33,7 +33,10 @@ module.exports = {
     rules: [
       {
         test: /\.js[x]?$/,
-        exclude: /\bcore-js\b/,
+        exclude: [
+          /core-js/,
+          /@babel\/runtime/,
+        ],
         loader: 'babel-loader'
       }, {
         test: /\.less$/,
@@ -45,15 +48,21 @@ module.exports = {
             options: {
               modules: {
                 localIdentName: '[local]-[contenthash:8]',
+                exportLocalsConvention: 'camelCaseOnly',
               },
               importLoaders: 2,
-              localsConvention: 'camelCase',
               esModule: true,
+              sourceMap: true,
               // context: path.resolve(__dirname, "../"),
             },
           },
           "postcss-loader",
-          "less-loader",
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+            }
+          }
         ],
       }, {
         test: /\.less$/,
@@ -65,6 +74,7 @@ module.exports = {
           {
             loader: 'less-loader',
             options: {
+              sourceMap: true,
               lessOptions: {
                 javascriptEnabled: true,
               }
