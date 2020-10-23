@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "antd": "^4.7.2",
+    "core-js-pure": "^3.6.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "showdown": "^1.9.1"

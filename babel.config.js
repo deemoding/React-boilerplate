@@ -3,24 +3,30 @@ module.exports = api => {
 
   const presets = [
     ["@babel/preset-env", {
-      targets: {
-        chrome: 60,
-        firefox: 60,
-        ie: 10
-      },
       spec: true,
       debug: false,
-      modules: 'cjs'
+      modules: 'cjs',
+      useBuiltIns: 'usage',
+      corejs: {
+        version: '3.6',
+        proposals: true,
+      }
     }],
     "@babel/preset-react"
   ];
 
   const plugins = [
     ["@babel/plugin-proposal-class-properties"],
+    // ["@babel/plugin-transform-runtime", {
+    //   corejs: {
+    //     version: 3,
+    //     proposals: true,
+    //   },
+    // }],
     ["import", {
-      "libraryName": "antd",
-      "libraryDirectory": "es",
-      "style": (paths) => `${paths.replace(/(.*)(row|col)$/, "$1grid")}/style/index`
+      libraryName: "antd",
+      libraryDirectory: "es",
+      style: (paths) => `${paths.replace(/(.*)(row|col)$/, "$1grid")}/style/index`
     }]
   ];
 
