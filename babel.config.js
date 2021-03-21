@@ -12,7 +12,9 @@ module.exports = api => {
         proposals: true,
       }
     }],
-    "@babel/preset-react"
+    ["@babel/preset-react", {
+      runtime: 'automatic',
+    }]
   ];
 
   const plugins = [

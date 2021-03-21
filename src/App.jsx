@@ -1,4 +1,4 @@
-import React from 'react';
+import { PureComponent } from 'react';
 import { Row, message } from "antd";
 import showdown from "showdown";
 import logo from './logo.svg';
@@ -6,7 +6,7 @@ import readme from "../README.md";
 import style from './App.less';
 import "./githubCss.css";
 
-class App extends React.PureComponent {
+class App extends PureComponent {
   componentDidMount() {
     setTimeout(() => {
       message.success("This boilerplate is so cool!", 3);
