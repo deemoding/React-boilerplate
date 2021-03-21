@@ -110,6 +110,9 @@ module.exports = {
     //   "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
     // },
   },
+  cache: {
+    type: "memory",
+  },
   plugins: [
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,

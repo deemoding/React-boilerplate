@@ -5,7 +5,7 @@ module.exports = api => {
     ["@babel/preset-env", {
       spec: true,
       debug: false,
-      modules: 'cjs',
+      // modules: false,
       useBuiltIns: 'usage',
       corejs: {
         version: '3',
@@ -34,6 +34,7 @@ module.exports = api => {
 
   return {
     presets,
-    plugins
+    plugins,
+    sourceType: 'unambiguous',
   };
 };
