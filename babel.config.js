@@ -8,7 +8,7 @@ module.exports = api => {
       modules: 'cjs',
       useBuiltIns: 'usage',
       corejs: {
-        version: '3.6',
+        version: '3',
         proposals: true,
       }
     }],

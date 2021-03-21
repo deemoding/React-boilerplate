@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
@@ -137,8 +137,8 @@ module.exports = {
           },
         },
       }),
-      new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.(css|less)$/,
+      new CssMinimizerPlugin({
+        test: /\.(css|less)$/,
       }),
     ],
   },
