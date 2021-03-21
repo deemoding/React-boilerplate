@@ -80,7 +80,7 @@ commit message检查就是这样实现的。因此，想自定义hook，可以�
 
 # 注意
 
-1. 如果你使用antd的话，必须保留 `src/antd/icon.js` 。如果你需要使用图标库，请参照样例添加需要的图标
+1. ~~如果你使用antd的话，必须保留 `src/antd/icon.js` 。如果你需要使用图标库，请参照样例添加需要的图标~~ antd@4 已经优化了这里，手动优化暂时可以不用了
 
 2. 升级到`1.7.0`后，要先移除`.eslintcache`，然后重新`npm run lint:fix`。如果报告如下错误
 
@@ -92,7 +92,9 @@ TypeError: Cannot read property 'range' of null
 
 3. `showdown`依赖低版本的`mem`，不需要md预览功能的，移除`showdown`即可解决安全警告
 
-4. `momentjs`太大了？罪魁祸首是[这个](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/index.tsx#L3)
+4. ~~`momentjs`太大了？罪魁祸首是[这个](https://github.com/ant-design/ant-design/blob/master/components/locale-provider/index.tsx#L3)~~
+
+antd@4 优化了这部分，现在应该没有这个问题了
 
 5. 启用了`React.StrictMode`，要格外注意[这里](https://reactjs.org/docs/strict-mode.html#detecting-unexpected-side-effects)
 

@@ -53,3 +53,4 @@ lib
 
 # custom
 *.bak
+*.min.js

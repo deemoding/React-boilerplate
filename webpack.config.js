@@ -1,18 +1,25 @@
-const webpack = require('webpack');
 const path = require('path');
 const opener = require('opener');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 
-const port = 65534;
+const port = 65533;
+const HTTPS = true;
 
 module.exports = {
   devServer: {
+    // host: '0.0.0.0',
+    port,
+    contentBase: './public',
+    https: HTTPS,
+    http2: HTTPS,
+    clientLogLevel: 'trace',
     historyApiFallback: true,
     hot: true,
     inline: true,
-    contentBase: './public',
-    port
+    // open: true,
+    // openPage: '',
   },
   mode: "development",
   devtool: "eval",
@@ -28,18 +35,35 @@ module.exports = {
       {
         test: /\.js[x]?$/,
         exclude: [
-          path.resolve(__dirname, 'node_modules/core-js'),
-          path.resolve(__dirname, 'node_modules/@babel/runtime'),
+          /core-js/,
+          /@babel\/runtime/,
         ],
-        use: [
-          'happypack/loader?id=js',
-        ],
+        loader: 'babel-loader'
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
         use: [
           "style-loader",
-          'happypack/loader?id=less',
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: '[local]-[contenthash:8]',
+                exportLocalsConvention: 'camelCaseOnly',
+              },
+              importLoaders: 2,
+              esModule: true,
+              sourceMap: true,
+              // context: path.resolve(__dirname, "../"),
+            },
+          },
+          "postcss-loader",
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+            }
+          }
         ],
       }, {
         // antd
@@ -48,7 +72,16 @@ module.exports = {
         exclude: /src/,
         use: [
           'style-loader',
-          'happypack/loader?id=antd',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              sourceMap: true,
+              lessOptions: {
+                javascriptEnabled: true,
+              }
+            },
+          },
         ]
       }, {
         test: /\.css$/,
@@ -75,53 +108,21 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
-    },
+    // alias: {
+    //   "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    // },
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HappyPack({
-      id: 'js',
-      loaders: [
-        'babel-loader',
-      ],
-    }),
-    new HappyPack({
-      id: 'less',
-      loaders: [
-        {
-          loader: "css-loader",
-          options: {
-            modules: {
-              localIdentName: '[local]-[contenthash:base64:8]',
-              context: path.resolve(__dirname),
-            },
-            importLoaders: 2,
-            localsConvention: 'camelCase',
-          },
-        },
-        "postcss-loader",
-        "less-loader",
-      ]
-    }),
-    new HappyPack({
-      id: 'antd',
-      loaders: [
-        'css-loader',
-        {
-          loader: 'less-loader',
-          options: {
-            javascriptEnabled: true,
-          },
-        },
-      ]
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
     }),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
       template: 'public/index.html'
     }),
+    // custom browser opener, only open browser when build successful
     (() => {
       class Opener {
         constructor() {
@@ -131,7 +132,7 @@ module.exports = {
         apply(compiler) {
           compiler.hooks.done.tap('Opener', stats => {
             if (!(this.done || stats.hasErrors())) {
-              opener(`http://localhost:${port}`);
+              opener(`${HTTPS ? 'https' : 'http'}://localhost:${port}`);
               this.done = true;
             }
           });

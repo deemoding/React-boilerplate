@@ -8,7 +8,7 @@ module.exports = api => {
       modules: 'cjs',
       useBuiltIns: 'usage',
       corejs: {
-        version: 3,
+        version: '3',
         proposals: true,
       }
     }],
@@ -17,7 +17,12 @@ module.exports = api => {
 
   const plugins = [
     ["@babel/plugin-proposal-class-properties"],
-    ["@babel/plugin-transform-runtime"],
+    // ["@babel/plugin-transform-runtime", {
+    //   corejs: {
+    //     version: 3,
+    //     proposals: true,
+    //   },
+    // }],
     ["import", {
       libraryName: "antd",
       libraryDirectory: "es",

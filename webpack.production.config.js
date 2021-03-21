@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HappyPack = require('happypack');
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -23,34 +23,61 @@ module.exports = smp.wrap({
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].[chunkhash:8].min.js'
+    filename: '[name].[contenthash:8].min.js'
   },
+  cache: {
+    type: 'memory',
+  },
+  devtool: false,
   module: {
     rules: [
       {
         test: /\.js[x]?$/,
         exclude: [
-          path.resolve(__dirname, 'node_modules/core-js'),
-          path.resolve(__dirname, 'node_modules/@babel/runtime'),
+          /core-js/,
+          /@babel\/runtime/,
         ],
-        use: [
-          'happypack/loader?id=js',
-        ],
+        loader: 'babel-loader'
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
         // FIXME:样式表不生成sourcemap
         use: [
           MiniCssExtractPlugin.loader,
-          'happypack/loader?id=less',
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: '[contenthash:8]',
+                exportLocalsConvention: 'camelCaseOnly',
+              },
+              importLoaders: 2,
+              sourceMap: true,
+            },
+          },
+          "postcss-loader",
+          {
+            loader: "less-loader",
+            options: {
+              sourceMap: true,
+            }
+          }
         ],
       }, {
         test: /\.less$/,
         include: /node_modules/,
         exclude: /src/,
         use: [
-          MiniCssExtractPlugin.loader,
-          'happypack/loader?id=antd',
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              }
+            },
+          },
         ]
       }, {
         test: /\.css$/,
@@ -82,24 +109,28 @@ module.exports = smp.wrap({
   },
   resolve: {
     extensions: ['.js', '.jsx'],
-    alias: {
-      "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
-    },
+    // alias: {
+    //   "@ant-design/icons/lib/dist$": path.resolve(__dirname, "src/antd/icon.js"),
+    // },
   },
   optimization: {
     splitChunks: {
       chunks: "all",
+      maxInitialRequests: 30,
+      maxAsyncRequests: 30,
+      maxSize: 100_000,
     },
     minimize: true,
     minimizer: [
       new TerserPlugin({
         test: /\.js[x]?$/,
-        cache: false,
+        // ignored in webpack5
+        // cache: false,
         parallel: true,
         // Works only with
         // source-map, inline-source-map, hidden-source-map and nosources-source-map values
         // for the devtool option
-        sourceMap: false,
+        // sourceMap: false,
         terserOptions: {
           output: {
             beautify: false, // 不需要格式化
@@ -107,14 +138,15 @@ module.exports = smp.wrap({
           },
           compress: {
             booleans: false,
-            drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+            // drop_console: true, // 删除所有的 `console` 语句，可以兼容ie浏览器
+            pure_funcs: ["console.log", "console.info", "console.debug", "console.trace"],
             collapse_vars: true, // 内嵌定义了但是只用到一次的变量
             reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
           },
         },
       }),
-      new OptimizeCSSAssetsPlugin({
-        assetNameRegExp: /\.(css|less)$/,
+      new CssMinimizerPlugin({
+        test: /\.(css|less)$/,
       }),
     ],
   },
@@ -124,47 +156,9 @@ module.exports = smp.wrap({
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new HappyPack({
-      id: 'js',
-      loaders: [
-        'babel-loader',
-      ]
-    }),
-    new HappyPack({
-      id: 'less',
-      loaders: [
-        {
-          loader: "css-loader",
-          options: {
-            modules: {
-              localIdentName: '[local]-[contenthash:base64:8]',
-              context: path.resolve(__dirname),
-            },
-            importLoaders: 2,
-            localsConvention: 'camelCase',
-            sourceMap: true,
-          },
-        },
-        "postcss-loader",
-        {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-          }
-        }
-      ]
-    }),
-    new HappyPack({
-      id: 'antd',
-      loaders: [
-        'css-loader',
-        {
-          loader: 'less-loader',
-          options: {
-            javascriptEnabled: true,
-          },
-        },
-      ]
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/
     }),
     new CleanWebpackPlugin({
       verbose: true,
@@ -172,12 +166,14 @@ module.exports = smp.wrap({
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[chunkhash:8].min.css',
+      filename: '[name].[contenthash:8].min.css',
     }),
-    new CopyWebpackPlugin([
-      { from: './public/*.json', to: '[name].[ext]' },
-      { from: './public/favicon.ico', to: 'favicon.ico' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './public/*.json', to: '[name].[ext]' },
+        { from: './public/favicon.ico', to: 'favicon.ico' },
+      ]
+    }),
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,

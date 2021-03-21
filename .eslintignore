@@ -2,3 +2,5 @@ node_modules/**
 **/*.css
 **/*.html
 build/**
+package-lock.json
+*.min.js
