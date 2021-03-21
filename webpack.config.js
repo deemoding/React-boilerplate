@@ -2,7 +2,6 @@ const path = require('path');
 const opener = require('opener');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HappyPack = require('happypack');
 
 const port = 65533;
 const HTTPS = true;
@@ -66,7 +65,6 @@ module.exports = {
           }
         ],
       }, {
-        // antd
         test: /\.less$/,
         include: /node_modules/,
         exclude: /src/,

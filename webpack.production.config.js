@@ -7,16 +7,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const HappyPack = require('happypack');
-const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
-const smp = new SpeedMeasurePlugin({
-  disable: false,
-  outputTarget: './build/speedReport.txt',
-  // outputFormat: 'json',
-});
-
-module.exports = smp.wrap({
+module.exports = {
   mode: "production",
   entry: {
     app: path.resolve(__dirname, 'src/index.jsx'),
@@ -181,4 +173,4 @@ module.exports = smp.wrap({
     }),
     new BundleAnalyzerPlugin(),
   ]
-});
+};
