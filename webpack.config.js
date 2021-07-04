@@ -3,8 +3,8 @@ const opener = require('opener');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const port = 65533;
-const HTTPS = true;
+const port = 65534;
+const HTTPS = false;
 
 module.exports = {
   devServer: {
