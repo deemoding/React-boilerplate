@@ -1,6 +1,7 @@
 import { PureComponent } from 'react';
 import { Row, message } from "antd";
 import showdown from "showdown";
+import 'antd/dist/antd.less';
 import logo from './logo.svg';
 import readme from "../README.md";
 import style from './App.less';

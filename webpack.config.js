@@ -33,11 +33,34 @@ module.exports = {
     rules: [
       {
         test: /\.js[x]?$/,
-        exclude: [
-          /core-js/,
-          /@babel\/runtime/,
-        ],
-        loader: 'babel-loader'
+        use: [{
+          loader: 'swc-loader',
+          options: {
+            "jsc": {
+              "parser": {
+                "syntax": "ecmascript",
+                "jsx": true,
+                "dynamicImport": false,
+                "privateMethod": false,
+                "functionBind": false,
+                "classPrivateProperty": false,
+                "exportDefaultFrom": true,
+                "exportNamespaceFrom": false,
+                "decorators": true,
+                "decoratorsBeforeExport": false,
+                "importMeta": false
+              },
+              "transform": {
+                "react": {
+                  "throwIfNamespace": true,
+                  "development": true,
+                  "useBuiltins": false,
+                  runtime: "automatic",
+                },
+              }
+            }
+          }
+        }]
       }, {
         test: /\.less$/,
         exclude: /node_modules/,
