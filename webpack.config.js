@@ -121,6 +121,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
+      // scriptLoading: 'blocking',
       template: 'public/index.html'
     }),
     // custom browser opener, only open browser when build successful

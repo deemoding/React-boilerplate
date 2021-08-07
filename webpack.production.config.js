@@ -169,6 +169,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       hash: false,
       inject: false,
+      // scriptLoading: 'blocking',
       template: 'public/index.html'
     }),
     new BundleAnalyzerPlugin(),
